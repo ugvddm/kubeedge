@@ -44,3 +44,7 @@ edged:
     maximum-dead-containers-per-container: 1
     docker-address: unix:///var/run/docker.sock
     version: 2.0.0
+
+mesh:
+    loadbalance:
+        strategy-name: RoundRobin

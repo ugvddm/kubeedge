@@ -50,7 +50,6 @@ import (
 	"github.com/kubeedge/kubeedge/edge/pkg/edged/containers"
 	"github.com/kubeedge/kubeedge/edge/pkg/edged/dockertools"
 	edgeImages "github.com/kubeedge/kubeedge/edge/pkg/edged/images"
-	"github.com/kubeedge/kubeedge/edge/pkg/edged/metaclient"
 	edgepleg "github.com/kubeedge/kubeedge/edge/pkg/edged/pleg"
 	"github.com/kubeedge/kubeedge/edge/pkg/edged/podmanager"
 	"github.com/kubeedge/kubeedge/edge/pkg/edged/rainerruntime"
@@ -60,6 +59,7 @@ import (
 	utilpod "github.com/kubeedge/kubeedge/edge/pkg/edged/util/pod"
 	"github.com/kubeedge/kubeedge/edge/pkg/edged/util/record"
 	"github.com/kubeedge/kubeedge/edge/pkg/metamanager"
+	"github.com/kubeedge/kubeedge/edge/pkg/metamanager/client"
 )
 
 const (
@@ -178,7 +178,7 @@ func (e *edged) Start(c *context.Context) {
 		log.LOGGER.Errorf("create pod dir [%s] failed: %v", e.getPodsDir(), err)
 		os.Exit(1)
 	}
-	e.metaClient = metaclient.New(c)
+	e.metaClient = client.New(c)
 	e.statusManager = status.NewManager(e.kubeClient, e.podManager, utilpod.NewPodDeleteSafety(), e.metaClient)
 	e.volumeManager = volumemanager.NewVolumeManager(
 		false,
@@ -267,7 +267,7 @@ func newEdged() (*edged, error) {
 		LowThresholdPercent:  conf.imageGCLowThreshold,
 		MinAge:               minAge,
 	}
-	// TODO: consider use metaclient generate kube client
+	// TODO: consider use client generate kube client
 	kubeClient := fakekube.NewSimpleClientset()
 
 	ed := &edged{

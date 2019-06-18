@@ -58,7 +58,8 @@ func process(conn net.Conn) {
 		return nil
 	}
 	invocationCallback := func(protocol string, invocation invocation.Invocation) {
-		c, err := handler.CreateChain(common.Consumer, protocol)
+		c, err := handler.CreateChain(common.Consumer, protocol, handler.Loadbalance)
+		//add lb
 		if err != nil {
 			log.LOGGER.Errorf("failed to create handlerchain:v%", err)
 		}

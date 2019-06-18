@@ -22,6 +22,7 @@ const (
 	ResourceTypePodlist    = "podlist"
 	ResourceTypePodStatus  = "podstatus"
 	ResourceTypeNodeStatus = "nodestatus"
+	ResourceTypeEndpoint   = "endpoint"
 )
 
 // Message struct
